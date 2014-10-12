@@ -5,14 +5,12 @@
     <title></title>
     <style>
         img {
-            position: absolute;
             width: 25px;
             height: 25px;
             padding: 2px;
             border: none;
         }
         p {
-            position: absolute;
             max-width: 180px;
             min-height: 20px;
             margin: 0;
@@ -39,6 +37,10 @@
             height: 366px;
             overflow: auto;
         }
+        .chatSec{
+            position: absolute;
+        }
+
 
         .edit {
             position: absolute;
@@ -78,6 +80,16 @@
         .left {
             left: 0;
         }
+        .floatRight{
+            float: right;
+        }
+        .floatLeft {
+            float: left;
+        }
+        .host, .guest {
+            max-width: 150px;
+            word-break: break-all;
+        }
         .host {
             right: 32px;
             color: #fff;
@@ -97,6 +109,8 @@
             var oBtn = document.getElementById("send");
             var oHost = document.getElementsByClassName("host");
             var change = true;
+            var top = 0;
+            var lastHeight = 30;
 
             oImg.onclick = function(){
                 if(change){
@@ -112,8 +126,11 @@
                 if(oMsg.value == ""){
                     alert("不好意思，您的输入信息为空~~");
                 }else{
+                    var boxSec = document.createElement("div");
                     if(change){
-                        oChatBox.innerHTML += "<img class='right' src='"+ oImg.src + "'>" + "<p class='host'>"+ oMsg.value +"</p>" + "<br />";
+                        boxSec.className = "chatSec right";
+                        boxSec.innerHTML += "<img class='floatRight' src='"+ oImg.src + "'>" + "<p class='host floatRight'>"+ oMsg.value +"</p>";
+                        
                         /*for(var i = oHost.length; i >0; i--){
                             (function(i){
                                 oHost[i].style.top += oHost[i-1].style.top +"px";
@@ -125,9 +142,24 @@
                         */
                     }
                     else{
-                        oChatBox.innerHTML += "<img class='left' src='"+ oImg.src + "'>" + "<p class='guest'>"+ oMsg.value +"</p>" + "<br />";
+                        boxSec.className = "chatSec left";
+                        boxSec.innerHTML += "<img class='floatLeft' src='"+ oImg.src + "'>" + "<p class='guest floatLeft'>"+ oMsg.value +"</p>" + "<br />";
                     }
 
+                   
+                   
+
+                    boxSec.style.top = top + 'px';
+                   
+
+                    oChatBox.appendChild(boxSec);
+
+                    lastHeight = window.getComputedStyle(boxSec)['height'];
+                   
+                    top += parseInt(lastHeight) + 10;
+
+                    oChatBox.scrollTop = parseInt(window.getComputedStyle(oChatBox)['height']);
+                    
                     oMsg.value = "";
                 }
             }
@@ -137,9 +169,6 @@
 <body>
 <div class="container">
     <div id="chatbox" class="chatbox">
-        <div class="chatSec">
-            
-        </div>
     </div>
     <div class="edit">
         <img id="headimg" class="headimg" src="img/yang.png" alt=""/>
