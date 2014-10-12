@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        img {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            padding: 2px;
+            border: none;
+        }
+        p {
+            position: absolute;
+            max-width: 180px;
+            min-height: 20px;
+            margin: 0;
+            padding: 4px 8px;
+            font: 14px/20px "microsoft yahei";
+        }
+        input {
+            padding: 0;
+            margin: 0;
+            outline: none;
+        }
+        .container {
+            position: relative;
+            width: 289px;
+            height: 594px;
+            margin: 0 auto;
+            background: url("img/iPhone.jpg");
+        }
+        .chatbox {
+            position: absolute;
+            top: 87px;
+            left: 25px;
+            width: 236px;
+            height: 366px;
+            overflow: auto;
+        }
+
+        .edit {
+            position: absolute;
+            bottom: 87px;
+            left: 26px;
+            width: 235px;
+            height: 48px;
+            border: 1px solid #c0c0c0;
+            background-color: #f7f7f7;
+        }
+        .headimg,.message,.send {
+            position: absolute;
+            top: 7px;
+            border: 1px solid #ded6e7;
+            border-radius: 8px;
+        }
+        .headimg {
+            left: 3px;
+            padding: 4px;
+        }
+        .message {
+            left: 45px;
+            width: 140px;
+            height: 33px;
+        }
+        .send {
+            right: 10px;
+            height: 35px;
+            font: 14px/35px "microsoft yahei";
+            color: #8c8494;
+            border: none;
+            background-color: #f7f7f7;
+        }
+        .right {
+            right: 0;
+        }
+        .left {
+            left: 0;
+        }
+        .host {
+            right: 32px;
+            color: #fff;
+            background-color: #21c618;
+        }
+        .guest {
+            left: 32px;
+            color: #000;
+            background-color: #ded6e7;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var oChatBox = document.getElementById("chatbox");
+            var oImg = document.getElementById("headimg");
+            var oMsg = document.getElementById("message");
+            var oBtn = document.getElementById("send");
+            var oHost = document.getElementsByClassName("host");
+            var change = true;
+
+            oImg.onclick = function(){
+                if(change){
+                    oImg.src = "img/dong.png";
+                    change = false;
+                }else{
+                    oImg.src = "img/yang.png";
+                    change = true;
+                }
+            }
+
+            oBtn.onclick = function(){
+                if(oMsg.value == ""){
+                    alert("不好意思，您的输入信息为空~~");
+                }else{
+                    if(change){
+                        oChatBox.innerHTML += "<img class='right' src='"+ oImg.src + "'>" + "<p class='host'>"+ oMsg.value +"</p>" + "<br />";
+                        /*for(var i = oHost.length; i >0; i--){
+                            (function(i){
+                                oHost[i].style.top += oHost[i-1].style.top +"px";
+                            }(i));
+                        }*///呜呜呜~~~写不来这里啊，我想实现倒着来的样子，间隔也没弄好~~
+                        /*
+                        * 1 对话条的间隔没有实现
+                        * 2 更新是由最上面显示，我的是下面显示，唉~~~
+                        */
+                    }
+                    else{
+                        oChatBox.innerHTML += "<img class='left' src='"+ oImg.src + "'>" + "<p class='guest'>"+ oMsg.value +"</p>" + "<br />";
+                    }
+
+                    oMsg.value = "";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div id="chatbox" class="chatbox">
+        <div class="chatSec">
+            
+        </div>
+    </div>
+    <div class="edit">
+        <img id="headimg" class="headimg" src="img/yang.png" alt=""/>
+        <input id="message" type="text" class="message" />
+        <input type="button" id="send" class="send" value="发送" />
+    </div>
+</div>
+</body>
+</html>
